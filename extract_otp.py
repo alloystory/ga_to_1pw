@@ -19,8 +19,16 @@ def main():
 
   if not output_dir.exists():
     output_dir.mkdir(exist_ok=True)
+  else:
+    for path in output_dir.glob('*'):
+      path.unlink()
 
-  for path in input_dir.glob("**/*"):
+  for path in input_dir.glob("*"):
+    if not path.suffix.lower() in {'.png', '.jpeg', '.jpg'}:
+      continue
+
+    print("Processing ", path)
+
     # Read the image.
     image = Image.open(path)
 
